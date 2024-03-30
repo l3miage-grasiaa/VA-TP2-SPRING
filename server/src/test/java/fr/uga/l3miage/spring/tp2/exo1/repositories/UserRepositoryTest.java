@@ -69,10 +69,13 @@ class UserRepositoryTest {
         // exécuter la requête
         // when
         Set<UserEntity> userEntitiesResponses = userRepository.findAllByMailContaining("univ-grenoble-alpes.fr"); // selection de la bd
+        Set<UserEntity> userEntitiesResponses1 = userRepository.findAllByMailContaining("gmail.com");
 
         //then
         assertThat(userEntitiesResponses).hasSize(2);
         assertThat(userEntitiesResponses.stream().findFirst().get().getMail()).isEqualTo("iAmAStudent@univ-grenoble-alpes.fr");
 
+        assertThat(userEntitiesResponses1).hasSize(2);
+        assertThat(userEntitiesResponses1.stream().findFirst().get().getMail()).isEqualTo("test@gmail.com");
     }
 }
