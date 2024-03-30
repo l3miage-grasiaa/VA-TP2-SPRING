@@ -41,16 +41,38 @@ class UserRepositoryTest {
                 .name("non google")
                 .build();
 
+        UserEntity userEntity3 = UserEntity
+                .builder()
+                .mail("whereAreU?@gmail.com")
+                .name("google")
+                .build();
+
+        UserEntity userEntity4 = UserEntity
+                .builder()
+                .mail("iAmAStudent@univ-grenoble-alpes.fr")
+                .name("student A")
+                .build();
+
+        UserEntity userEntity5 = UserEntity
+                .builder()
+                .mail("test@univ-grenoble-alpes.fr")
+                .name("uni")
+                .build();
+
         // savegarde les entity
         userRepository.save(userEntity); // insertion dans la bd
         userRepository.save(userEntity2);
+        userRepository.save(userEntity3);
+        userRepository.save(userEntity4);
+        userRepository.save(userEntity5);
 
         // exécuter la requête
         // when
-        Set<UserEntity> userEntitiesResponses = userRepository.findAllByMailContaining("gmail"); // selection de la bd
+        Set<UserEntity> userEntitiesResponses = userRepository.findAllByMailContaining("univ-grenoble-alpes.fr"); // selection de la bd
 
         //then
-        assertThat(userEntitiesResponses).hasSize(1);
-        assertThat(userEntitiesResponses.stream().findFirst().get().getMail()).isEqualTo("test@gmail.com");
+        assertThat(userEntitiesResponses).hasSize(2);
+        assertThat(userEntitiesResponses.stream().findFirst().get().getMail()).isEqualTo("iAmAStudent@univ-grenoble-alpes.fr");
+
     }
 }
