@@ -33,9 +33,20 @@ public class SongComponentTest {
 
     @Test
     void getSongEntityByIdNotFound(){
+        /*
+        * Anda telah menggunakan metode when() dari Mockito untuk menentukan
+        * perilaku mock bean songRepository. Anda menentukan bahwa ketika findById()
+        * dipanggil dengan argumen apa pun, itu harus mengembalikan Optional
+        * kosong, menirukan perilaku ketika entitas lagu tidak ditemukan.
+        */
         // Given
         when(songRepository.findById(anyString())).thenReturn(Optional.empty());
 
+        /*
+         * Anda menguji apakah metode getSongEntityById() menghasilkan pengecualian
+         * NotFoundSongEntityException seperti yang diharapkan saat entitas lagu
+         * tidak ditemukan
+         */
         // then - when
         assertThrows(NotFoundSongEntityException.class, ()->songComponent.getSongEntityById("test"));
     };
@@ -48,8 +59,16 @@ public class SongComponentTest {
         songEntity.setTitle("Sentuh Hatiku");
         songEntity.setDuration(Duration.ofMinutes(3).plusSeconds(43));
 
+        /*
+        * Anda menentukan bahwa itu harus mengembalikan Optional yang berisi
+        * objek songEntity, menirukan perilaku ketika entitas lagu ditemukan.
+        */
         when(songRepository.findById(anyString())).thenReturn(Optional.of(songEntity));
 
+        /*
+        * Anda menguji apakah metode tersebut berhasil berjalan tanpa melempar
+        * pengecualian, menunjukkan bahwa entitas lagu berhasil ditemukan
+        */
         // when - then
         assertDoesNotThrow(()->songComponent.getSongEntityById("test"));
     }
